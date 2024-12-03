@@ -26,11 +26,12 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/Dashboard" element={<Dashboard/>} />
+        <Route path="/Menu" element={<Menu/>} />
       </Routes>
 
+     {/* Admin */}
       <Routes>
-        <Route path="/Menu" element={<Menu/>} />
+        <Route path="/Dashboard" element={<Dashboard/>} />
       </Routes>
     </Router>
 

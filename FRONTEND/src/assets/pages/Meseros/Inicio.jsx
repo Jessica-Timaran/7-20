@@ -1,37 +1,31 @@
 import React from "react";
-import Menu from "../../components/Menu"; // Importamos el Sidebar
-import BotonCrear from "../../components/BotonCrear";
+import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
 const Inicio = () => {
-  // Definimos las opciones del menú
-  const menuItems = [
-    { title: "Inicio", path: "/inicio" },
-    { title: "Pedidos", path: "/pedidos" },
-    { title: "Perfil", path: "/perfil" },
-  ];
-
-  // Función de cierre de sesión
-  const handleLogout = () => {
-    console.log("Cerrando sesión...");
-  };
-
-  // Función para manejar clic en el botón "Crear"
   const handleCrear = () => {
     console.log("Creando un nuevo pedido...");
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <Menu menuItems={menuItems} onLogout={handleLogout} />
+    <LayoutPrincipal title="Inicio">
+      <div className="flex flex-col items-center justify-center h-full">
+        {/* Imagen */}
+        <img 
+          src="IMG/FondoAgregar.png" 
+          alt="Imagen con opacidad" 
+          className="w-80 h-64 object-cover opacity-20"
+        />
 
-      {/* Contenido principal */}
-      <div className="flex flex-col items-start p-6 gap-4">
-        <h1 className="text-2xl font-bold">Inicio</h1>
         {/* Botón Crear */}
-        <BotonCrear onClick={handleCrear} text="Crear Pedido" />
+        <button
+          onClick={handleCrear}
+          className="mt-6 flex items-center gap-2 bg-[#22284F] text-white px-6 py-3 rounded-lg hover:bg-blue-600 shadow-lg"
+        >
+          <i class="fa-solid fa-plus"></i>
+          <span>Crear</span>
+        </button>
       </div>
-    </div>
+    </LayoutPrincipal>
   );
 };
 

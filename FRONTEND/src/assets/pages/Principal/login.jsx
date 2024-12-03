@@ -38,7 +38,7 @@ const Login = () => {
         <div className="w-full max-w-sm p-6 bg-white shadow-lg rounded-lg">
           {/* Logo reducido */}
           <img
-            className="mx-auto mb-4 w-20 h-20 md:w-24 md:h-32" 
+            className="mx-auto mb-4 w-20 h-24 md:w-24 md:h-32" 
             src="./IMG/LogoSinFondo.png"
             alt="Logo"
           />

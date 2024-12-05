@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Modal1 = ({ isOpen, onClose }) => {
+  // Estado inicial con las opciones predeterminadas seleccionadas
+  const initialOptions = {
+    sancocho: true,
+    arroz: true,
+    maduro: true,
+    ensalada: true,
+  };
+
+  const [selectedOptions, setSelectedOptions] = useState(initialOptions);
   const [selectedPrincipio, setSelectedPrincipio] = useState("");
   const [selectedProteina, setSelectedProteina] = useState("");
 
+  // Restablecer las opciones cuando se abra el modal
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedOptions(initialOptions); // Restablecer las opciones seleccionadas
+      setSelectedPrincipio(""); // Restablecer selección de principio
+      setSelectedProteina(""); // Restablecer selección de proteína
+    }
+  }, [isOpen]); // Solo cuando se abra el modal
+
+  // Manejar cambios en los checkboxes
   const handleCheckboxChange = (event) => {
-    console.log(`${event.target.name} está ${event.target.checked ? "seleccionado" : "no seleccionado"}`);
+    const { name, checked } = event.target;
+    setSelectedOptions((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+    console.log(`${name} está ${checked ? "seleccionado" : "no seleccionado"}`);
   };
 
   const handleSelectChange = (event, setter) => {
@@ -22,42 +46,18 @@ const Modal1 = ({ isOpen, onClose }) => {
         <form>
           {/* Checkboxes */}
           <div className="space-y-2">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="sancocho"
-                className="mr-2"
-                onChange={handleCheckboxChange}
-              />
-              Sancocho
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="arroz"
-                className="mr-2"
-                onChange={handleCheckboxChange}
-              />
-              Arroz
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="maduro"
-                className="mr-2"
-                onChange={handleCheckboxChange}
-              />
-              Maduro
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="ensalada"
-                className="mr-2"
-                onChange={handleCheckboxChange}
-              />
-              Ensalada
-            </label>
+            {["sancocho", "arroz", "maduro", "ensalada"].map((option) => (
+              <label key={option} className="flex items-center">
+                <input
+                  type="checkbox"
+                  name={option}
+                  checked={selectedOptions[option]} // Estado controlado
+                  className="mr-2"
+                  onChange={handleCheckboxChange}
+                />
+                {option.charAt(0).toUpperCase() + option.slice(1)}
+              </label>
+            ))}
           </div>
 
           {/* Selects */}
@@ -74,7 +74,7 @@ const Modal1 = ({ isOpen, onClose }) => {
               <option value="Papa">Papa</option>
               <option value="Yuca">Yuca</option>
               <option value="Plátano">Plátano</option>
-              <option value="Plátano">Ninguno</option>
+              <option value="Ninguno">Ninguno</option>
             </select>
           </div>
           <div className="mt-4">
@@ -90,7 +90,7 @@ const Modal1 = ({ isOpen, onClose }) => {
               <option value="Pollo">Pollo</option>
               <option value="Carne">Carne</option>
               <option value="Cerdo">Cerdo</option>
-              <option value="Plátano">Ninguno</option>
+              <option value="Ninguno">Ninguno</option>
             </select>
           </div>
 

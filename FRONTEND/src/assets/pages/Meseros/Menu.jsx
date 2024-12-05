@@ -20,28 +20,33 @@ const Menu = () => {
 
   return (
     <LayoutPrincipal>
-      <div className="flex min-h-screen gap-6 justify-center items-center">
-        {/* Primera carta con Modal1 */}
-        <CardMenu
-          image=""
-          title="Completo"
-          onAdd={handleOpenModal1} // Abre Modal1
-        />
-
-        {/* Segunda carta con Modal2 */}
-        <CardMenu
-          image="IMG/AlmuerzoCompleto.jpg"
-          title="Bandeja"
-          onAdd={handleOpenModal2} // Abre Modal2
-        />
-
-        {/* Tercera carta con Modal3 */}
-        <CardMenu
-          image="https://via.placeholder.com/300x200?text=Comida3"
-          title="Sancocho"
-          onAdd={handleOpenModal3} // Abre Modal3
-        />
+      {/* Título de la vista */}
+      <div className="text-center mt-6">
+        <h1 className="text-3xl font-bold text-gray-800">Menú de Opciones</h1>
+        <p className="text-gray-600 mt-2">
+          Selecciona una de las opciones para continuar
+        </p>
       </div>
+
+      {/* Tarjetas del menú */}
+      <div className="flex h-auto gap-6 justify-center items-start mt-6">
+  <CardMenu
+    image="IMG/AlmuerzoCompleto.jpg"
+    title="Completo"
+    onAdd={handleOpenModal1} // Abre Modal1
+  />
+  <CardMenu
+    image="IMG/AlmuerzoCompleto.jpg"
+    title="Bandeja"
+    onAdd={handleOpenModal2} // Abre Modal2
+  />
+  <CardMenu
+    image="IMG/AlmuerzoCompleto.jpg"
+    title="Sancocho"
+    onAdd={handleOpenModal3} // Abre Modal3
+  />
+</div>
+
 
       {/* Modales */}
       <Modal1 isOpen={isModal1Open} onClose={handleCloseModal1} />

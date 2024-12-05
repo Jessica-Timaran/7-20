@@ -1,8 +1,9 @@
 import React from "react";
 
-const Card = ({ number, text, bgColor, hoverShadow, iconClass }) => {
+const Card = ({ number, text, bgColor, hoverShadow, iconClass, onClick }) => {
   return (
     <div
+      onClick={onClick} // Agregar evento onClick
       className={`group w-full rounded-lg p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] ${bgColor} ${hoverShadow}`}
     >
       {/* Número */}

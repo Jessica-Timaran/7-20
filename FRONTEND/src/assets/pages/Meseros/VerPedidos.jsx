@@ -1,11 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import Card from "../../components/Card/Card";
+import CardVerPedido from "../../components/Card/CardVerPedido";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
-const Pedidos = () => {
-  const navigate = useNavigate();
-
+const VerPedidos = () => {
   const cards = [
     {
       number: "Mesa 1",
@@ -30,25 +27,20 @@ const Pedidos = () => {
     },
   ];
 
-  const handleCardClick = () => {
-    navigate("/menu");
-  };
-
   return (
     <LayoutPrincipal>
       {/* Contenido principal */}
       <div className="flex-1 p-6">
-        <h1 className=" mb-4 text-3xl font-bold text-gray-800">Crear Pedido</h1>
+        <h1 className="mb-4 text-3xl font-bold text-gray-800">Pedidos</h1>
         <div className="grid grid-cols-2 w-[700px] gap-4 max-[500px]:grid-cols-1 px-3">
           {cards.map((card, index) => (
-            <Card
+            <CardVerPedido
               key={index}
               number={card.number}
               text={card.text}
               bgColor={card.bgColor}
               hoverShadow={card.hoverShadow}
-              iconClass={card.iconClass}
-              onClick={handleCardClick} // Pasar evento onClick
+              iconClass={card.iconClass} // Prop iconClass
             />
           ))}
         </div>
@@ -57,4 +49,4 @@ const Pedidos = () => {
   );
 };
 
-export default Pedidos;
+export default VerPedidos;

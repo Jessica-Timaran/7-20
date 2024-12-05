@@ -1,11 +1,11 @@
 import React from "react";
 
-const Menu = () => {
+const Sidebard= () => {
   const menuItems = [
     { title: "Inicio", path: "/Inicio", icon: "fa-home" },
     { title: "Crear Pedidos", path: "/pedidos", icon: "fa-box" },
-    { title: "Ver Pedidos", path: "/Menu", icon: "fa-user" },
-    { title: "Product", path: "/product", icon: "fa-tag" },
+    { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
+    { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
     { title: "Inbox", path: "/inbox", icon: "fa-inbox" },
   ];
 
@@ -42,4 +42,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default Sidebard;

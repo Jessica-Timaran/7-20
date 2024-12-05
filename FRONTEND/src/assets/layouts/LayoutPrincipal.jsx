@@ -1,15 +1,15 @@
 import React from "react";
-import Menu from "../components/Menu";
+import Sidebard from "../components/Sidebard";
 import PostLayout from "./PostLayout";
 import Header from "../components/Header";
 
 const LayoutPrincipal = ({ title, children, username }) => {
   return (
     <PostLayout title={title}>
-      <div className="flex h-auto">
+      <div className="flex h-screen">
         {/* Menú lateral */}
         <aside className="w-64 bg-gray-800">
-          <Menu />
+          <Sidebard />
         </aside>
 
         {/* Contenido principal */}

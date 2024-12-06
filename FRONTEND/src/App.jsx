@@ -6,6 +6,7 @@ import Inicio from './assets/pages/Meseros/Inicio'
 import VerPedidos from './assets/pages/Meseros/VerPedidos';
 import Dashboard from './assets/pages/Admin/Dashboard';
 import Menu from './assets/pages/Meseros/Menu';
+import Registro from './assets/pages/Principal/Registro';
 
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
      {/* Admin */}
       <Routes>
         <Route path="/Dashboard" element={<Dashboard/>} />
+      </Routes>
+
+      <Routes>
+        <Route path="/Registro" element={<Registro/>} />
       </Routes>
     </Router>
 

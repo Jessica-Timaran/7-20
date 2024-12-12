@@ -1,44 +1,44 @@
-const pool = require("../config/db"); // Importa la configuración de la base de datos
+const pool = require("../config/db"); // Configuración de la base de datos
 const bcrypt = require("bcrypt"); // Biblioteca para encriptar contraseñas
 
 // Controlador para registrar un usuario
 const registerUser = async (req, res) => {
-  const { nombre, correo, contraseña } = req.body;
+  const { nombre, correo, contraseña, idrol } = req.body;
 
-  // Validaciones básicas
-  if (!nombre || !correo || !contraseña) {
-    return res.status(400).json({ message: "Todos los campos son obligatorios" });
+  if (!nombre || !correo || !contraseña || !idrol) {
+    return res.status(400).json({ error: "Todos los campos son obligatorios." });
+  }
+
+  const roleId = parseInt(idrol, 10); // Conversión segura a entero
+
+  if (isNaN(roleId)) {
+    return res.status(400).json({ error: "El rol debe ser un número válido." });
   }
 
   try {
-    // Encriptar la contraseña antes de guardarla
-    const hashedPassword = await bcrypt.hash(contraseña, 10);
+    // Encriptar la contraseña
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(contraseña, salt);
 
-    // Insertar datos en la base de datos
+    // Insertar el usuario en la base de datos
     const query = `
-      INSERT INTO usuarios (nombre, correo, contraseña, estado, idrol)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING idusuarios;
+      INSERT INTO usuarios (nombre, correo, contraseña, idrol, fecha_creacion, estado)
+      VALUES ($1, $2, $3, $4, NOW(), $5) RETURNING *;
     `;
-    const values = [nombre, correo, hashedPassword, "activo", 2]; // Rol predeterminado: 2 (por ejemplo, usuario)
 
+    const values = [nombre, correo, hashedPassword, roleId, true];
     const result = await pool.query(query, values);
 
-    // Enviar respuesta exitosa
-    res.status(201).json({
-      message: "Usuario registrado con éxito",
-      userId: result.rows[0].idpersonas,
-    });
-  } catch (error) {
-    console.error("Error al registrar usuario:", error);
-
-    // Manejo de errores específicos (ejemplo: correo duplicado)
-    if (error.code === "23505") { // Código de error de PostgreSQL para duplicados
-      return res.status(409).json({ message: "El correo ya está registrado" });
-    }
-
-    res.status(500).json({ message: "Error interno del servidor" });
+    const newUser = result.rows[0];
+    delete newUser.contraseña;
+    res.status(201).json(newUser);
+  } catch (err) {
+    console.error("Error al registrar el usuario:", err);
+    res.status(500).json({ error: "Error del servidor. Inténtalo más tarde." });
   }
 };
 
-module.exports = { registerUser };
+
+module.exports = {
+  registerUser,
+};

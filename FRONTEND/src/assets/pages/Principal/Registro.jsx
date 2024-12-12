@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../../components/Input";
-import useFormValidation from "../../../Hooks/useFormValidation";
+import useFormValidation from "../../../Hooks/useRegisterUser";
 
 const Registro = () => {
   const { values, errors, handleChange, validate } = useFormValidation({
@@ -145,3 +145,6 @@ const Registro = () => {
 };
 
 export default Registro;
+
+
+

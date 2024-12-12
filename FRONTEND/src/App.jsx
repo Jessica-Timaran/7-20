@@ -43,6 +43,10 @@ function App() {
       <Routes>
         <Route path="/Registro" element={<Registro/>} />
       </Routes>
+
+      <Routes>
+        <Route path="/Registro" element={<Registro/>} />
+      </Routes>
     </Router>
 
     

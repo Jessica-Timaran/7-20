@@ -1,5 +1,6 @@
 const pool = require("../config/db"); // Configuración de la base de datos
 const bcrypt = require("bcrypt"); // Biblioteca para encriptar contraseñas
+const jwt = require("jsonwebtoken"); 
 
 // Controlador para registrar un usuario
 const registerUser = async (req, res) => {
@@ -38,7 +39,55 @@ const registerUser = async (req, res) => {
   }
 };
 
+// Controlador para iniciar sesión
+const loginUser = async (req, res) => {
+  const { correo, contraseña } = req.body;
 
-module.exports = {
+  if (!correo || !contraseña) {
+    return res.status(400).json({ error: "Correo y contraseña son obligatorios." });
+  }
+
+  try {
+    // Buscar al usuario en la base de datos
+    const query = "SELECT * FROM usuarios WHERE correo = $1";
+    const result = await pool.query(query, [correo]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado." });
+    }
+
+    const user = result.rows[0];
+
+    // Comparar la contraseña ingresada con la almacenada
+    const isMatch = await bcrypt.compare(contraseña, user.contraseña);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Contraseña incorrecta." });
+    }
+
+    // Generar token JWT
+    const token = jwt.sign({ id: user.idusuarios, correo: user.correo }, 'tu_clave_secreta', {
+      expiresIn: '1h',
+    });
+
+    // Retornar el token y los datos del usuario
+    res.status(200).json({
+      message: "Inicio de sesión exitoso",
+      token,
+      user: {
+        id: user.idusuarios,
+        nombre: user.nombre,
+        correo: user.correo,
+        idrol: user.idrol
+      }
+    });
+  } catch (err) {
+    console.error("Error al iniciar sesión:", err);
+    res.status(500).json({ error: "Error del servidor. Inténtalo más tarde." });
+  }
+};
+
+module.exports = 
+{
   registerUser,
+  loginUser,
 };

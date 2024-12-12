@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
 import Input from "../../components/Input";
 
 const Login = () => {
-  // Crear estado para los inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false); // Estado para controlar visibilidad de contraseña
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Hook para redirigir
 
-  // Funciones de cambio para los inputs
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -20,6 +22,56 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    setLoading(true); // Activar el estado de carga
+    setError(""); // Limpiar errores previos
+
+    try {
+      const response = await fetch("http://localhost:4000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          correo: email,
+          contraseña: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Guardar el token y los datos del usuario
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirigir según el rol
+        switch (data.user.idrol) {
+          case 1:
+            navigate("/Pedidos");
+            break;
+          case 2:
+            navigate("/Dashboard");
+            break;
+          case 3:
+            navigate("/VerPedidos");
+            break;
+          default:
+            navigate("/"); // Ruta predeterminada
+        }
+      } else {
+        setError(data.error || "Error en el inicio de sesión.");
+      }
+    } catch (err) {
+      setError("Error al conectar con el servidor.");
+      console.error("Error al hacer la solicitud de login:", err);
+    } finally {
+      setLoading(false); // Desactivar el estado de carga
+    }
+  };
+
   return (
     <div className="flex h-screen flex-col md:flex-row relative">
       {/* Lado izquierdo con imagen de fondo */}
@@ -29,28 +81,22 @@ const Login = () => {
           src="/IMG/fondo.jpeg"
           alt="fondo"
         />
-        {/* Overlay rojo transparente */}
         <div className="absolute inset-0 bg-blue-500 bg-opacity-20"></div>
       </div>
 
       {/* Lado derecho */}
       <div className="flex-1 flex items-center justify-center bg-white px-4 py-8">
         <div className="w-full max-w-sm p-6 bg-white shadow-lg rounded-lg">
-          {/* Logo reducido */}
           <img
-            className="mx-auto mb-4 w-20 h-24 md:w-24 md:h-32" 
+            className="mx-auto mb-4 w-20 h-24 md:w-24 md:h-32"
             src="./IMG/LogoSinFondo.png"
             alt="Logo"
           />
-          
-          {/* Título */}
           <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center mb-6 md:mb-8">
             Iniciar Sesión
           </h2>
 
-          {/* Formulario */}
-          <form className="space-y-6 md:space-y-8">
-            {/* Campo de correo */}
+          <form className="space-y-6 md:space-y-8" onSubmit={handleLogin}>
             <Input
               id="email"
               type="email"
@@ -59,38 +105,35 @@ const Login = () => {
               onChange={handleEmailChange}
             />
 
-            {/* Campo de contraseña con ícono */}
             <div className="relative">
               <Input
                 id="password"
-                type={passwordVisible ? "text" : "password"} // Cambia el tipo de input según el estado
+                type={passwordVisible ? "text" : "password"}
                 Text="Contraseña"
                 value={password}
                 onChange={handlePasswordChange}
               />
-              {/* Ícono de ojo */}
               <span
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer"
               >
                 <i
-                  className={`fas ${
-                    passwordVisible ? "fa-eye-slash" : "fa-eye"
-                  }`}
+                  className={`fas ${passwordVisible ? "fa-eye-slash" : "fa-eye"}`}
                 ></i>
               </span>
             </div>
 
-            {/* Botón de inicio de sesión */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <button
               type="submit"
               className="w-full bg-blue-800 text-white font-medium py-2 md:py-3 rounded-full hover:bg-blue-600 transition"
+              disabled={loading}
             >
-              Iniciar Sesión
+              {loading ? "Cargando..." : "Iniciar Sesión"}
             </button>
           </form>
 
-          {/* Enlace adicional */}
           <div className="text-center mt-4 md:mt-6">
             <a href="#" className="text-xs md:text-sm text-blue-500 hover:underline">
               ¿Olvidaste tu contraseña?

@@ -1,13 +1,33 @@
 import React from "react";
 
-const Sidebard= () => {
-  const menuItems = [
-    { title: "Inicio", path: "/Inicio", icon: "fa-home" },
-    { title: "Crear Pedidos", path: "/pedidos", icon: "fa-box" },
-    { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
-    { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
-    { title: "Inbox", path: "/inbox", icon: "fa-inbox" },
-  ];
+const Sidebard = () => {
+  // Recuperar el rol del usuario (por ejemplo, de localStorage)
+  const userRole = localStorage.getItem("role"); // Asegúrate de guardar el rol como "1", "2", "3" en localStorage.
+
+  // Configuración de menús por rol
+  const menuItemsByRole = {
+    1: [ // Mesero
+      { title: "Inicio", path: "/Inicio", icon: "fa-home" },
+      { title: "Crear Pedidos", path: "/pedidos", icon: "fa-box" },
+      { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
+      { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
+      
+    ],
+    2: [ // Administrador
+      { title: "Inicio", path: "/Inicio", icon: "fa-home" },
+      { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
+      { title: "Estadísticas", path: "/estadisticas", icon: "fa-chart-bar" },
+      { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
+    ],
+    3: [ // Cocinero
+      { title: "Inicio", path: "/Inicio", icon: "fa-home" },
+      { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
+      { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
+    ],
+  };
+
+  // Obtener los elementos del menú según el rol
+  const menuItems = menuItemsByRole[userRole] || [];
 
   return (
     <div className="h-screen bg-gray-800 text-white">

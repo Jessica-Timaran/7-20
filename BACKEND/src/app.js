@@ -4,6 +4,7 @@ const cors = require("cors");
 
 // Importar rutas
 const userRoutes = require("../routes/userRoutes"); // Esta es la correcta
+const MeseroRoutes = require("../routes/MeseroRoutes"); // Esta es la correcta
 
 // Middleware
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(express.json()); // Para manejar JSON en las solicitudes
 
 // Usar rutas
 app.use("/api/users", userRoutes);
+app.use("/api/mesero", MeseroRoutes);
 
 // Ruta base
 app.get("/", (req, res) => {

@@ -74,12 +74,13 @@ const loginUser = async (req, res) => {
       message: "Inicio de sesión exitoso",
       token,
       user: {
-        id: user.idusuarios,
+        id: user.idusuarios,  // Asegúrate de que 'idusuarios' sea el campo correcto
         nombre: user.nombre,
         correo: user.correo,
         idrol: user.idrol
       }
     });
+    
   } catch (err) {
     console.error("Error al iniciar sesión:", err);
     res.status(500).json({ error: "Error del servidor. Inténtalo más tarde." });

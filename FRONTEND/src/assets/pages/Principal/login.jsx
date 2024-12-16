@@ -24,10 +24,10 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
-    setLoading(true); // Activar el estado de carga
-    setError(""); // Limpiar errores previos
-
+  
+    setLoading(true);
+    setError(""); 
+  
     try {
       const response = await fetch("http://localhost:4000/api/users/login", {
         method: "POST",
@@ -39,14 +39,15 @@ const Login = () => {
           contraseña: password,
         }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        // Guardar el token y los datos del usuario
+        // Guardar token y datos del usuario
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-
+        localStorage.setItem("id_usuarios", data.user.id);  // Asegúrate de usar la propiedad correcta
+      
         // Redirigir según el rol
         switch (data.user.idrol) {
           case 1:
@@ -61,6 +62,8 @@ const Login = () => {
           default:
             navigate("/"); // Ruta predeterminada
         }
+      
+      
       } else {
         setError(data.error || "Error en el inicio de sesión.");
       }
@@ -68,9 +71,10 @@ const Login = () => {
       setError("Error al conectar con el servidor.");
       console.error("Error al hacer la solicitud de login:", err);
     } finally {
-      setLoading(false); // Desactivar el estado de carga
+      setLoading(false); 
     }
   };
+  
 
   return (
     <div className="flex h-screen flex-col md:flex-row relative">

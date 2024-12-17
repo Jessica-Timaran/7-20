@@ -25,8 +25,10 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    setLoading(true); // Activar el estado de carga
-    setError(""); // Limpiar errores previos
+  
+    setLoading(true);
+    setError(""); 
+  
 
     try {
       const response = await fetch("http://localhost:4000/api/users/login", {
@@ -39,13 +41,14 @@ const Login = () => {
           contraseña: password,
         }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        // Guardar el token y los datos del usuario
+        // Guardar token y datos del usuario
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("id_usuarios", data.user.id);  // Asegúrate de usar la propiedad correcta
 
         // Redirigir según el rol
         switch (data.user.idrol) {

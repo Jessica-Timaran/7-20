@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 const Modal1 = ({ isOpen, onClose }) => {
   // Estado inicial con las opciones predeterminadas seleccionadas
   const initialOptions = {
-    sancocho: true,
-    arroz: true,
-    maduro: true,
-    ensalada: true,
+    sancocho: false,
+    arroz: false,
+    maduro: false,
+    ensalada: false,
   };
 
   const [selectedOptions, setSelectedOptions] = useState(initialOptions);

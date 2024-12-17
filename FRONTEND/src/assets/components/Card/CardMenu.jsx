@@ -5,9 +5,10 @@ const CardMenu = ({ image, title, onAdd }) => {
 
   return (
     <div 
-      className="relative w-80 h-56 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+      className="w-56 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onAdd}
     >
       {/* Background Image */}
       <div 
@@ -30,12 +31,12 @@ const CardMenu = ({ image, title, onAdd }) => {
           </h3>
           
           <button
-            onClick={onAdd}
-            className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md 
+            
+            className="absolute top-1/2 right-1 transform -translate-x-1 -translate-y-1/2 bg-white/20 backdrop-blur-md
                        hover:bg-[#673ab7] text-white rounded-full 
                        w-12 h-12 flex items-center justify-center 
                        transition-all duration-300 ease-in-out 
-                       transform hover:scale-110 opacity-0 group-hover:opacity-100"
+                      hover:scale-110 opacity-0 group-hover:opacity-100"
           >
             {/* SVG icon */}
             <svg 

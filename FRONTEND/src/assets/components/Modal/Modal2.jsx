@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 const Modal2 = ({ isOpen, onClose }) => {
   // Estado para las opciones de los checkboxes, con valores preseleccionados
   const [selectedOptions, setSelectedOptions] = useState({
-    arroz: true,  // Preseleccionado
-    maduro: true, // Preseleccionado
-    ensalada: true, // Preseleccionado
+    arroz: false,  // Preseleccionado
+    maduro: false, // Preseleccionado
+    ensalada: false, // Preseleccionado
   });
 
   // Estado para los selects, con valores preseleccionados
-  const [selectedPrincipio, setSelectedPrincipio] = useState("Yuca"); // Preseleccionado
-  const [selectedProteina, setSelectedProteina] = useState("Pollo"); // Preseleccionado
+  const [selectedPrincipio, setSelectedPrincipio] = useState(""); // Preseleccionado
+  const [selectedProteina, setSelectedProteina] = useState(""); // Preseleccionado
 
   // Manejar cambios en los checkboxes
   const handleCheckboxChange = (event) => {
@@ -32,12 +32,12 @@ const Modal2 = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) {
       setSelectedOptions({
-        arroz: true,
-        maduro: true,
-        ensalada: true,
+        arroz: false,
+        maduro: false,
+        ensalada: false,
       });
-      setSelectedPrincipio("Yuca");
-      setSelectedProteina("Pollo");
+      setSelectedPrincipio("");
+      setSelectedProteina("");
     }
   }, [isOpen]);
 

@@ -53,7 +53,7 @@ const Pedidos = () => {
       alert("No se pudo conectar con el servidor");
     }
   };
-  
+
   
   return (
     <LayoutPrincipal>

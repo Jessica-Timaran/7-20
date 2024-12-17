@@ -46,8 +46,6 @@ const Menu = () => {
     onAdd={handleOpenModal3} // Abre Modal3
   />
 </div>
-
-
       {/* Modales */}
       <Modal1 isOpen={isModal1Open} onClose={handleCloseModal1} />
       <Modal2 isOpen={isModal2Open} onClose={handleCloseModal2} />

@@ -7,6 +7,7 @@ import VerPedidos from './assets/pages/Meseros/VerPedidos';
 import Dashboard from './assets/pages/Admin/Dashboard';
 import Menu from './assets/pages/Meseros/Menu';
 import Registro from './assets/pages/Principal/Registro';
+import Crear_pedidos from './assets/pages/Meseros/Crear_pedidos';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
         <Route path="/Inicio" element={<Inicio />} />
         <Route path="/Menu" element={<Menu />} />
         <Route path="/VerPedidos" element={<VerPedidos />} />
+        <Route path="/Crear_pedidos" element={<Crear_pedidos />} />
+  
 
         {/* Admin */}
         <Route path="/Dashboard" element={<Dashboard />} />

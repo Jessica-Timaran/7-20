@@ -1,8 +1,8 @@
 import React from "react";
 
-const Sidebard = () => {
-  // Recuperar el rol del usuario (por ejemplo, de localStorage)
-  const userRole = localStorage.getItem("role"); // Asegúrate de guardar el rol como "1", "2", "3" en localStorage.
+const Sidebar = () => {
+  // Recuperar y parsear el rol del usuario
+  const userRole = parseInt(localStorage.getItem("role"), 10);
 
   // Configuración de menús por rol
   const menuItemsByRole = {
@@ -11,7 +11,6 @@ const Sidebard = () => {
       { title: "Crear Pedidos", path: "/pedidos", icon: "fa-box" },
       { title: "Ver Pedidos", path: "/VerPedidos", icon: "fa-tag" },
       { title: "Editar Perfil", path: "/EditarPerfil", icon: "fa-user" },
-      
     ],
     2: [ // Administrador
       { title: "Inicio", path: "/Inicio", icon: "fa-home" },
@@ -28,6 +27,14 @@ const Sidebard = () => {
 
   // Obtener los elementos del menú según el rol
   const menuItems = menuItemsByRole[userRole] || [];
+
+  if (!menuItems.length) {
+    return (
+      <div className="h-screen bg-gray-800 text-white flex items-center justify-center">
+        <p>Acceso no autorizado. Por favor, inicia sesión.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen bg-gray-800 text-white">
@@ -62,4 +69,4 @@ const Sidebard = () => {
   );
 };
 
-export default Sidebard;
+export default Sidebar;

@@ -43,13 +43,12 @@ const Login = () => {
       });
   
       const data = await response.json();
-  
       if (response.ok) {
         // Guardar token y datos del usuario
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("id_usuarios", data.user.id);  // Asegúrate de usar la propiedad correcta
-
+        localStorage.setItem("id_usuarios", data.user.idusuarios); 
+        localStorage.setItem("role", data.user.idrol); // Guardar rol directamente
+      
         // Redirigir según el rol
         switch (data.user.idrol) {
           case 1:
@@ -64,6 +63,7 @@ const Login = () => {
           default:
             navigate("/"); // Ruta predeterminada
         }
+            
       } else {
         setError(data.error || "Error en el inicio de sesión.");
       }

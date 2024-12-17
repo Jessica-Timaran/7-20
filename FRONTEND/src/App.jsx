@@ -7,6 +7,7 @@ import VerPedidos from './assets/pages/Meseros/VerPedidos';
 import Dashboard from './assets/pages/Admin/Dashboard';
 import Menu from './assets/pages/Meseros/Menu';
 import Registro from './assets/pages/Principal/Registro';
+import UserActivos from './assets/pages/Admin/UserActivos';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 
         {/* Admin */}
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/UserActivos" element={<UserActivos />} />
 
        
 
